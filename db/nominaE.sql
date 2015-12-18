@@ -875,7 +875,7 @@ BEGIN
 		SELECT idempleado, idperfil, idestatuusuario, numintentos, contrasena INTO paIdEmpleado, paIdPerfil, paIdEstatus, vlNumIntentos, vlContrasena FROM tusuarios WHERE usuario = paUsuario;
 		set vlExiste = 0;
 		set paMsg = 'LA CONTRASENA NO ES CORRECTA';
-		if vlContrasena = paContrasena then set vlExiste = 1; else set vlExiste = 0; end if;
+		if vlContrasena = password(paContrasena) then set vlExiste = 1; else set vlExiste = 0; end if;
 		if vlExiste > 0 then
 			set vlExiste = 0;			
 			IF paIdEstatus = vlEstatusOk then
