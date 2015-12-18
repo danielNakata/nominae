@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">medicae</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="templeados" view="colnames">
+<left>567</left>
+<top>342</top>
+<width>188</width>
+<height>299</height>
+<sql_create_table>CREATE TABLE `templeados` (
+  `idempleado` int(11) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
+  `paterno` varchar(50) NOT NULL,
+  `materno` varchar(50) NOT NULL DEFAULT '-',
+  `idcategoria` int(11) NOT NULL DEFAULT '0',
+  `idpuesto` int(11) DEFAULT NULL,
+  `fechanac` date DEFAULT NULL,
+  `fechaalta` date DEFAULT NULL,
+  `fechaaltasp` date DEFAULT NULL,
+  `idestatus` int(11) DEFAULT NULL,
+  `iddepartamento` int(11) NOT NULL DEFAULT '0',
+  `idtipocontrato` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idempleado`),
+  KEY `FK_templeados_departamentos` (`iddepartamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tidentificacionempleados" view="colnames">
+<left>281</left>
+<top>13</top>
+<width>193</width>
+<height>231</height>
+<sql_create_table>CREATE TABLE `tidentificacionempleados` (
+  `idempleado` int(11) NOT NULL COMMENT 'identificador del empleado',
+  `ididentificacion` int(11) NOT NULL COMMENT 'identificador de la identificacion o documento legal',
+  `clave` varchar(150) NOT NULL COMMENT 'clave o numero de serie de la identificacion',
+  `idestatus` int(11) NOT NULL DEFAULT '1' COMMENT 'estatus de la identificacion',
+  `imagen` blob COMMENT 'scan de la identificacion',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha y hora del registro',
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'fecha y hora de la modificacion',
+  `usuarioreg` varchar(50) DEFAULT NULL COMMENT 'usuario que registra',
+  `usuariomod` varchar(50) DEFAULT NULL COMMENT 'usuario que modifica',
+  PRIMARY KEY (`idempleado`,`ididentificacion`),
+  KEY `FK_tidentificacionempleados` (`ididentificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tdomicilioempleados" view="colnames">
+<left>284</left>
+<top>260</top>
+<width>196</width>
+<height>311</height>
+<sql_create_table>CREATE TABLE `tdomicilioempleados` (
+  `idempleado` int(11) NOT NULL COMMENT 'identificador del empleado',
+  `iddomicilio` int(11) NOT NULL COMMENT 'identificador del tipo de domicilio',
+  `calle` varchar(150) NOT NULL DEFAULT '-' COMMENT 'nombre de la calle',
+  `nexterior` varchar(10) NOT NULL DEFAULT '-' COMMENT 'numero exterior',
+  `ninterior` varchar(10) DEFAULT '-' COMMENT 'numero interior del domicilio',
+  `codpostal` varchar(5) NOT NULL DEFAULT '00000' COMMENT 'codigo postal del domicilio',
+  `idcolonia` int(11) NOT NULL DEFAULT '0' COMMENT 'identificador de la colonia del domicilio',
+  `idmunicipio` int(11) NOT NULL DEFAULT '0' COMMENT 'identificador del municipio o delegacion',
+  `idestado` int(11) NOT NULL DEFAULT '0' COMMENT 'identificador del estado o entidad federativa',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de registro del domicilio',
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'fecha de modificacion del domicilio',
+  `usuarioreg` varchar(50) DEFAULT NULL COMMENT 'usuario que registra',
+  `usuariomod` varchar(50) DEFAULT NULL COMMENT 'usuario que modifica',
+  `idestatus` int(11) DEFAULT NULL COMMENT 'identificador del estatus',
+  PRIMARY KEY (`idempleado`,`iddomicilio`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcontactoempleados" view="colnames">
+<left>282</left>
+<top>584</top>
+<width>203</width>
+<height>214</height>
+<sql_create_table>CREATE TABLE `tcontactoempleados` (
+  `idempleado` int(11) NOT NULL,
+  `idcontacto` int(11) NOT NULL,
+  `clave` varchar(150) NOT NULL DEFAULT '-',
+  `idestatus` int(11) NOT NULL DEFAULT '1',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuarioreg` varchar(50) DEFAULT '-',
+  `usuariomod` varchar(50) DEFAULT '-',
+  PRIMARY KEY (`idempleado`,`idcontacto`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatidentificacionempleados" view="colnames">
+<left>18</left>
+<top>19</top>
+<width>199</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcatidentificacionempleados` (
+  `ididentificacion` int(11) NOT NULL,
+  `descripcion` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ididentificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatdomicilioempleados" view="colnames">
+<left>11</left>
+<top>265</top>
+<width>208</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcatdomicilioempleados` (
+  `iddomicilio` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`iddomicilio`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatcontactoempleados" view="colnames">
+<left>8</left>
+<top>600</top>
+<width>226</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcatcontactoempleados` (
+  `idcontacto` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idcontacto`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatpuestos" view="colnames">
+<left>1058</left>
+<top>6</top>
+<width>153</width>
+<height>251</height>
+<sql_create_table>CREATE TABLE `tcatpuestos` (
+  `idpuesto` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL DEFAULT '-',
+  `descripcion` text,
+  `idestatus` int(11) NOT NULL DEFAULT '1',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuarioreg` varchar(50) DEFAULT NULL,
+  `usuariomod` varchar(50) DEFAULT NULL,
+  `numempleados` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idpuesto`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tpuestosempleados" view="colnames">
+<left>827</left>
+<top>5</top>
+<width>181</width>
+<height>322</height>
+<sql_create_table>CREATE TABLE `tpuestosempleados` (
+  `idempleado` int(11) NOT NULL,
+  `idpuesto` int(11) NOT NULL,
+  `fechainicio` date DEFAULT NULL,
+  `fechafin` date DEFAULT NULL,
+  `idestatus` int(11) NOT NULL DEFAULT '0',
+  `idcategoria` int(11) NOT NULL DEFAULT '0',
+  `folionombramiento` varchar(100) NOT NULL DEFAULT '-',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuarioreg` varchar(50) DEFAULT NULL,
+  `usuariomod` varchar(50) DEFAULT NULL,
+  `idempleadoauth` int(11) NOT NULL DEFAULT '0',
+  `fechaauth` date DEFAULT NULL,
+  `folioauth` varchar(100) NOT NULL DEFAULT '-',
+  `sueldobase` double(10,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`idempleado`,`idpuesto`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatcategorias" view="colnames">
+<left>831</left>
+<top>339</top>
+<width>172</width>
+<height>214</height>
+<sql_create_table>CREATE TABLE `tcatcategorias` (
+  `idcategoria` int(11) NOT NULL,
+  `clavecategoria` varchar(50) NOT NULL DEFAULT '-',
+  `descripcion` text,
+  `idestatus` int(11) NOT NULL DEFAULT '1',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuarioreg` varchar(50) DEFAULT '-',
+  `usuariomod` varchar(50) DEFAULT '-',
+  PRIMARY KEY (`idcategoria`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatdepartamentos" view="colnames">
+<left>563</left>
+<top>11</top>
+<width>188</width>
+<height>299</height>
+<sql_create_table>CREATE TABLE `tcatdepartamentos` (
+  `iddepartamento` int(11) NOT NULL,
+  `descripcion` varchar(100) NOT NULL DEFAULT '-',
+  `nummaxempbase` int(11) NOT NULL DEFAULT '0',
+  `numminempbase` int(11) NOT NULL DEFAULT '0',
+  `nummaxemptemp` int(11) NOT NULL DEFAULT '0',
+  `numminempmin` int(11) NOT NULL DEFAULT '0',
+  `numempactual` int(11) NOT NULL DEFAULT '0',
+  `idempleadojefe` int(11) NOT NULL DEFAULT '0',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuarioreg` varchar(50) DEFAULT '-',
+  `usuariomod` varchar(50) DEFAULT '-',
+  `idestatus` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`iddepartamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcattipocontratos" view="colnames">
+<left>1054</left>
+<top>267</top>
+<width>156</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcattipocontratos` (
+  `idtipocontrato` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idtipocontrato`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatestatusempleados" view="colnames">
+<left>1054</left>
+<top>388</top>
+<width>158</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcatestatusempleados` (
+  `idestatus` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idestatus`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tasistenciasempleados" view="colnames">
+<left>568</left>
+<top>680</top>
+<width>189</width>
+<height>282</height>
+<sql_create_table>CREATE TABLE `tasistenciasempleados` (
+  `idempleado` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `idturno` int(11) NOT NULL DEFAULT '0',
+  `idtipoasistencia` int(11) NOT NULL DEFAULT '1',
+  `tieneincidencia` int(3) NOT NULL DEFAULT '0',
+  `idtipopago` int(11) NOT NULL DEFAULT '1',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `idestatusasistencia` int(11) DEFAULT NULL,
+  `usuarioreg` varchar(50) DEFAULT '-',
+  `usuariomod` varchar(50) DEFAULT '-',
+  PRIMARY KEY (`idempleado`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatturnos" view="colnames">
+<left>825</left>
+<top>664</top>
+<width>145</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `tcatturnos` (
+  `idturno` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL DEFAULT '-',
+  `horainicia` time DEFAULT NULL,
+  `horafin` time DEFAULT NULL,
+  PRIMARY KEY (`idturno`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcattipopagos" view="colnames">
+<left>824</left>
+<top>839</top>
+<width>148</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcattipopagos` (
+  `idtipopago` int(11) NOT NULL,
+  `descripcion` varchar(50) DEFAULT '-',
+  PRIMARY KEY (`idtipopago`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatestatusasistencias" view="colnames">
+<left>825</left>
+<top>985</top>
+<width>153</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcatestatusasistencias` (
+  `idestatusasistencia` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idestatusasistencia`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tusuarios" view="colnames">
+<left>211</left>
+<top>821</top>
+<width>169</width>
+<height>214</height>
+<sql_create_table>CREATE TABLE `tusuarios` (
+  `idempleado` int(11) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(150) NOT NULL,
+  `idperfil` int(11) NOT NULL DEFAULT '1',
+  `idestatususuario` int(11) NOT NULL DEFAULT '1',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `fechaultimoacc` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`idempleado`),
+  UNIQUE KEY `ix_tusuarios_01` (`usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatperfiles" view="colnames">
+<left>32</left>
+<top>822</top>
+<width>110</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcatperfiles` (
+  `idperfil` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idperfil`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="tcatestatususuarios" view="colnames">
+<left>29</left>
+<top>955</top>
+<width>139</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `tcatestatususuarios` (
+  `idestatususuario` int(11) NOT NULL,
+  `descripcion` varchar(50) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idestatususuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
