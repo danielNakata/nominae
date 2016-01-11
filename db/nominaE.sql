@@ -1,6 +1,6 @@
 /*
 SQLyog Enterprise - MySQL GUI v8.05 
-MySQL - 5.6.26 : Database - nominae
+MySQL - 5.5.5-10.1.9-MariaDB : Database - nominae
 *********************************************************************
 */
 
@@ -10,6 +10,8 @@ MySQL - 5.6.26 : Database - nominae
 
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`nominae` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `nominae`;
 
@@ -238,6 +240,50 @@ CREATE TABLE `tcatidentificacionempleados` (
 
 insert  into `tcatidentificacionempleados`(`ididentificacion`,`descripcion`) values (1,'INE'),(2,'PASAPORTE'),(3,'LICENCIA DE MANEJO'),(4,'ACTA DE NACIMIENTO'),(5,'ACTA DE MATRIMONIO'),(6,'GAFETE OFICIAL'),(7,'CREDENCIAL EDUCATIVA');
 
+/*Table structure for table `tcatmenuapp` */
+
+DROP TABLE IF EXISTS `tcatmenuapp`;
+
+CREATE TABLE `tcatmenuapp` (
+  `idmenu` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL DEFAULT '-',
+  `texto` varchar(50) NOT NULL DEFAULT '-',
+  `idestatus` int(11) NOT NULL DEFAULT '1',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuarioreg` varchar(50) DEFAULT '-',
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuariomod` varchar(50) DEFAULT NULL,
+  `clase` text NOT NULL,
+  `componente` varchar(255) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idmenu`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tcatmenuapp` */
+
+insert  into `tcatmenuapp`(`idmenu`,`descripcion`,`texto`,`idestatus`,`fechareg`,`usuarioreg`,`fechamod`,`usuariomod`,`clase`,`componente`) values (100,'Menu de aplicacion','Aplicacion',1,'2016-01-09 21:11:17','SISTEMAS','0000-00-00 00:00:00',NULL,'dnn.nominae.main.gui.NominaEMain','menuAplicacion'),(900,'Menu de Ayuda','Ayuda',1,'2016-01-09 21:11:50','SISTEMAS','0000-00-00 00:00:00',NULL,'dnn.nominae.main.gui.NominaEMain','menuAyuda');
+
+/*Table structure for table `tcatopcionesapp` */
+
+DROP TABLE IF EXISTS `tcatopcionesapp`;
+
+CREATE TABLE `tcatopcionesapp` (
+  `idopcion` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL DEFAULT '-',
+  `clase` text NOT NULL,
+  `idestatus` int(1) NOT NULL,
+  `idmenu` int(11) NOT NULL,
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuarioreg` varchar(50) DEFAULT '-',
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuariomod` varchar(50) DEFAULT NULL,
+  `componente` varchar(255) NOT NULL DEFAULT '-',
+  PRIMARY KEY (`idopcion`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tcatopcionesapp` */
+
+insert  into `tcatopcionesapp`(`idopcion`,`descripcion`,`clase`,`idestatus`,`idmenu`,`fechareg`,`usuarioreg`,`fechamod`,`usuariomod`,`componente`) values (101,'Opcion para inciar sesion en la aplicacion','dnn.nominae.main.gui.NominaEMain',1,100,'2016-01-09 21:41:17','SISTEMAS','0000-00-00 00:00:00',NULL,'optIniciarSesion'),(102,'Opcion para cerrar la sesion','dnn.nominae.main.gui.NominaEMain',1,100,'2016-01-09 21:41:53','SISTEMAS','0000-00-00 00:00:00',NULL,'optCerrarSesion'),(103,'Opcion para cerrar la aplicacion','dnn.nominae.main.gui.NominaEMain',1,100,'2016-01-09 21:43:09','SISTEMAS','0000-00-00 00:00:00',NULL,'optSalir'),(901,'Opcion para abrir la ventana de ayuda','dnn.nominae.main.gui.NominaEMain',1,900,'2016-01-09 21:44:24','SISTEMAS','0000-00-00 00:00:00',NULL,'optAyuda');
+
 /*Table structure for table `tcatperfiles` */
 
 DROP TABLE IF EXISTS `tcatperfiles`;
@@ -449,9 +495,11 @@ CREATE TABLE `tlogaccesousuarios` (
   `lugaracceso` varchar(50) NOT NULL DEFAULT '-',
   `idresultadoop` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idlog`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tlogaccesousuarios` */
+
+insert  into `tlogaccesousuarios`(`idlog`,`fechareg`,`usuario`,`idempleado`,`lugaracceso`,`idresultadoop`) values (1,'2016-01-09 22:01:32','SISTEMAS',1,'127.0.0.1',6),(2,'2016-01-09 22:01:32','SISTEMAS',1,'127.0.0.1',1),(3,'2016-01-09 22:01:41','SISTEMAS',1,'127.0.0.1',6),(4,'2016-01-09 22:01:41','SISTEMAS',1,'127.0.0.1',1),(5,'2016-01-09 22:01:48','SISTEMAS',1,'127.0.0.1',6),(6,'2016-01-09 22:01:48','SISTEMAS',1,'127.0.0.1',1),(7,'2016-01-09 22:07:20','SISTEMAS',1,'127.0.0.1',1),(8,'2016-01-09 22:10:14','SISTEMAS',1,'127.0.0.1',1),(9,'2016-01-10 22:17:25','ADMIN',2,'127.0.0.1',1),(10,'2016-01-10 22:27:29','ADMIN',2,'127.0.0.1',1),(11,'2016-01-10 22:28:39','ADMIN',2,'127.0.0.1',1),(12,'2016-01-10 22:29:22','ADMIN',2,'127.0.0.1',1),(13,'2016-01-10 22:37:56','ADMIN',2,'127.0.0.1',1),(14,'2016-01-10 22:58:39','ADMIN',2,'127.0.0.1',1),(15,'2016-01-10 23:00:59','ADMIN',2,'127.0.0.1',1);
 
 /*Table structure for table `tlogmodificaciones` */
 
@@ -533,7 +581,68 @@ CREATE TABLE `tusuarios` (
 
 /*Data for the table `tusuarios` */
 
-insert  into `tusuarios`(`idempleado`,`usuario`,`contrasena`,`idperfil`,`idestatususuario`,`fechareg`,`fechamod`,`fechaultimoacc`,`numintentos`) values (1,'SISTEMAS','*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9',1,1,'2015-12-17 23:14:48','0000-00-00 00:00:00','0000-00-00 00:00:00',0),(2,'ADMIN','*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9',1,1,'2015-12-17 23:19:35','0000-00-00 00:00:00','0000-00-00 00:00:00',0),(3,'ADMIN2','*84AAC12F54AB666ECFC2A83C676908C8BBC381B1',2,1,'2015-12-17 23:32:27','2015-12-17 23:56:31','0000-00-00 00:00:00',0);
+insert  into `tusuarios`(`idempleado`,`usuario`,`contrasena`,`idperfil`,`idestatususuario`,`fechareg`,`fechamod`,`fechaultimoacc`,`numintentos`) values (1,'SISTEMAS','*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9',1,1,'2015-12-17 23:14:48','0000-00-00 00:00:00','0000-00-00 00:00:00',1),(2,'ADMIN','*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9',1,1,'2015-12-17 23:19:35','0000-00-00 00:00:00','0000-00-00 00:00:00',1),(3,'ADMIN2','*84AAC12F54AB666ECFC2A83C676908C8BBC381B1',2,1,'2015-12-17 23:32:27','2015-12-17 23:56:31','0000-00-00 00:00:00',0);
+
+/*Table structure for table `tusuariosopciones` */
+
+DROP TABLE IF EXISTS `tusuariosopciones`;
+
+CREATE TABLE `tusuariosopciones` (
+  `usuario` varchar(50) NOT NULL,
+  `idmenu` int(11) NOT NULL,
+  `idopcion` int(11) NOT NULL,
+  `esactivo` int(11) NOT NULL DEFAULT '0',
+  `esvisible` int(11) NOT NULL DEFAULT '0',
+  `fechareg` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuarioreg` varchar(50) DEFAULT '-',
+  `fechamod` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `usuariomod` varchar(50) DEFAULT '-',
+  PRIMARY KEY (`usuario`,`idopcion`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tusuariosopciones` */
+
+/* Procedure structure for procedure `NE_FN_CONSULTACATCONTACTOEMPLEADOS` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `NE_FN_CONSULTACATCONTACTOEMPLEADOS` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_FN_CONSULTACATCONTACTOEMPLEADOS`()
+BEGIN
+	SELECT idcontacto, descripcion from tcatcontactoempleados order by idcontacto asc;
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `NE_FN_CONSULTAUSUARIOS` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `NE_FN_CONSULTAUSUARIOS` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_FN_CONSULTAUSUARIOS`(
+	IN paTipoBusqueda int
+	,in paFiltro varchar(50)
+    )
+BEGIN
+	case paTipoBusqueda
+		when 1 then SELECT idempleado, usuario, contrasena, idperfil, idestatususuario, idperfil, fechareg, fechamod, fechaultimoacc, numintentos
+				from tusuarios where idempleado = paFiltro;
+				
+		when 2 then select idempleado, usuario, contrasena, idperfil, idestatususuario, idperfil, fechareg, fechamod, fechaultimoacc, numintentos
+				FROM tusuarios WHERE usuario = paFiltro;
+				
+		when 3 then SELECT idempleado, usuario, contrasena, idperfil, idestatususuario, idperfil, fechareg, fechamod, fechaultimoacc, numintentos
+				FROM tusuarios WHERE idperfil = paFiltro;
+	
+		when 4 then SELECT idempleado, usuario, contrasena, idperfil, idestatususuario, idperfil, fechareg, fechamod, fechaultimoacc, numintentos
+				FROM tusuarios WHERE idestatususuario = paFiltro;
+				
+		else SELECT idempleado, usuario, contrasena, idperfil, idestatususuario, idperfil, fechareg, fechamod, fechaultimoacc, numintentos
+				FROM tusuarios;
+	end case;
+    END */$$
+DELIMITER ;
 
 /* Procedure structure for procedure `NE_SP_AGREGACONTACTOEMPLEADO` */
 
@@ -653,6 +762,59 @@ BEGIN
     END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `NE_SP_AGREGALOGINICIOSESION` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `NE_SP_AGREGALOGINICIOSESION` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_SP_AGREGALOGINICIOSESION`(IN paUsuario varchar(50)
+	,in paIdEmpleado int
+	,in paLugar varchar(50)
+	,IN paIdResultadoOp INT
+    )
+BEGIN
+	INSERT INTO tlogaccesousuarios(usuario, idempleado, lugaracceso, idresultadoop) VALUES(paUsuario, paIdEmpleado, paLugar, paIdResultadoOp);
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `NE_SP_AGREGALOGMODIFICACIONES` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `NE_SP_AGREGALOGMODIFICACIONES` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_SP_AGREGALOGMODIFICACIONES`(
+	IN paUsuarioReg varchar(50)
+	,in paNombreSp varchar(255)
+	,in paIdTipoModificacion int
+	,in paValoresAct text
+	,in paValoresNuevos text
+    )
+BEGIN
+	insert into tlogmodificaciones(usuarioreg, nombresp, idtipomodificacion, valoresactuales, valoresnuevos) values(
+	paUsuarioReg, paNombreSP, paIdTipoModificacion, paValoresAct, paValoresNuevos);
+	
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `NE_SP_AGREGALOGMODIFUSER` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `NE_SP_AGREGALOGMODIFUSER` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_SP_AGREGALOGMODIFUSER`(
+	in paUsuario varchar(50)
+	,in paUsuarioMod varchar(50)
+	,in paNombreSP varchar(50)
+	,in paValoresModif text
+)
+BEGIN
+	insert into tlogmodificacionesusuarios(usuario, usuariomod, nombresp, valoresmodif) values(paUsuario, paUsuarioMod, paNombreSP, paValoresModif);
+    END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `NE_SP_AGREGAEMPLEADO` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `NE_SP_AGREGAEMPLEADO` */;
@@ -722,59 +884,6 @@ BEGIN
 			end if;
 		end if;
 	end if;
-    END */$$
-DELIMITER ;
-
-/* Procedure structure for procedure `NE_SP_AGREGALOGINICIOSESION` */
-
-/*!50003 DROP PROCEDURE IF EXISTS  `NE_SP_AGREGALOGINICIOSESION` */;
-
-DELIMITER $$
-
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_SP_AGREGALOGINICIOSESION`(IN paUsuario varchar(50)
-	,in paIdEmpleado int
-	,in paLugar varchar(50)
-	,IN paIdResultadoOp INT
-    )
-BEGIN
-	INSERT INTO tlogaccesousuarios(usuario, idempleado, lugaracceso, idresultadoop) VALUES(paUsuario, paIdEmpleado, paLugar, paIdResultadoOp);
-    END */$$
-DELIMITER ;
-
-/* Procedure structure for procedure `NE_SP_AGREGALOGMODIFICACIONES` */
-
-/*!50003 DROP PROCEDURE IF EXISTS  `NE_SP_AGREGALOGMODIFICACIONES` */;
-
-DELIMITER $$
-
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_SP_AGREGALOGMODIFICACIONES`(
-	IN paUsuarioReg varchar(50)
-	,in paNombreSp varchar(255)
-	,in paIdTipoModificacion int
-	,in paValoresAct text
-	,in paValoresNuevos text
-    )
-BEGIN
-	insert into tlogmodificaciones(usuarioreg, nombresp, idtipomodificacion, valoresactuales, valoresnuevos) values(
-	paUsuarioReg, paNombreSP, paIdTipoModificacion, paValoresAct, paValoresNuevos);
-	
-    END */$$
-DELIMITER ;
-
-/* Procedure structure for procedure `NE_SP_AGREGALOGMODIFUSER` */
-
-/*!50003 DROP PROCEDURE IF EXISTS  `NE_SP_AGREGALOGMODIFUSER` */;
-
-DELIMITER $$
-
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `NE_SP_AGREGALOGMODIFUSER`(
-	in paUsuario varchar(50)
-	,in paUsuarioMod varchar(50)
-	,in paNombreSP varchar(50)
-	,in paValoresModif text
-)
-BEGIN
-	insert into tlogmodificacionesusuarios(usuario, usuariomod, nombresp, valoresmodif) values(paUsuario, paUsuarioMod, paNombreSP, paValoresModif);
     END */$$
 DELIMITER ;
 
@@ -872,7 +981,7 @@ BEGIN
 	
 	select COUNT(*) INTO vlExiste FROM tusuarios where usuario = paUsuario;
 	IF vlExiste > 0 THEN
-		SELECT idempleado, idperfil, idestatuusuario, numintentos, contrasena INTO paIdEmpleado, paIdPerfil, paIdEstatus, vlNumIntentos, vlContrasena FROM tusuarios WHERE usuario = paUsuario;
+		SELECT idempleado, idperfil, idestatususuario, numintentos, contrasena INTO paIdEmpleado, paIdPerfil, paIdEstatus, vlNumIntentos, vlContrasena FROM tusuarios WHERE usuario = paUsuario;
 		set vlExiste = 0;
 		set paMsg = 'LA CONTRASENA NO ES CORRECTA';
 		if vlContrasena = password(paContrasena) then set vlExiste = 1; else set vlExiste = 0; end if;
