@@ -5,17 +5,26 @@
  */
 package dnn.nominae.main.gui;
 
+import dnn.moduloayudanominae.main.VAyuda;
+import dnn.modulolog.log.Logger;
+import dnn.nominae.conf.Config;
+import java.util.Calendar;
+
 /**
  *
  * @author danie
  */
 public class NominaEMain extends javax.swing.JFrame {
+    
+    VAyuda vayuda = null;
 
     /**
      * Creates new form NominaEMain
      */
     public NominaEMain() {
         initComponents();
+        if(!Config.configCargada)
+            Config.cargaConfiguracion();
     }
 
     /**
@@ -27,8 +36,8 @@ public class NominaEMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
-        jToolBar1 = new javax.swing.JToolBar();
+        DeskPane = new javax.swing.JDesktopPane();
+        toolPane = new javax.swing.JToolBar();
         cmbMenu = new javax.swing.JMenuBar();
         menuAplicacion = new javax.swing.JMenu();
         optIniciarSesion = new javax.swing.JMenuItem();
@@ -39,18 +48,18 @@ public class NominaEMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout DeskPaneLayout = new javax.swing.GroupLayout(DeskPane);
+        DeskPane.setLayout(DeskPaneLayout);
+        DeskPaneLayout.setHorizontalGroup(
+            DeskPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        DeskPaneLayout.setVerticalGroup(
+            DeskPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 590, Short.MAX_VALUE)
         );
 
-        jToolBar1.setRollover(true);
+        toolPane.setRollover(true);
 
         menuAplicacion.setText("Aplicacion");
 
@@ -72,6 +81,11 @@ public class NominaEMain extends javax.swing.JFrame {
 
         optAyuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         optAyuda.setText("Acerca de");
+        optAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optAyudaActionPerformed(evt);
+            }
+        });
         menuAyuda.add(optAyuda);
 
         cmbMenu.add(menuAyuda);
@@ -82,30 +96,43 @@ public class NominaEMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
+            .addComponent(DeskPane)
+            .addComponent(toolPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1)
+                .addComponent(DeskPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(toolPane, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void optAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optAyudaActionPerformed
+        try{
+            if(vayuda == null){
+                vayuda = new VAyuda(Config.nombreApp, Config.descripcionApp, Config.versionApp, Config.desarrolladorApp, Config.lugarApp + " " + Calendar.getInstance().getTime().toString());
+                this.DeskPane.add(vayuda);
+            }
+            this.vayuda.setVisible(true);
+            this.DeskPane.setSelectedFrame(vayuda);
+        }catch(Exception ex){
+            Logger.log(Config.logRuta, Config.logArch, Logger.EXCEPCION, Config.nombreApp, this.getClass().toString(), "optAyudaActionPerformed", ex.toString(), ex);
+        }
+    }//GEN-LAST:event_optAyudaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane DeskPane;
     private javax.swing.JMenuBar cmbMenu;
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuAplicacion;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuItem optAyuda;
     private javax.swing.JMenuItem optCerrarSesion;
     private javax.swing.JMenuItem optIniciarSesion;
     private javax.swing.JMenuItem optSalir;
+    private javax.swing.JToolBar toolPane;
     // End of variables declaration//GEN-END:variables
 }
