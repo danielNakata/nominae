@@ -34,25 +34,25 @@ public class ModuloBDConexion {
             paramsOut.add(java.sql.Types.INTEGER);
             paramsOut.add(java.sql.Types.INTEGER);
             paramsOut.add(java.sql.Types.INTEGER);
-            /*
+            
             resp = qry.consulta(conn, "select * from tusuarios");
             if(resp.getRes()==1){
                 System.out.println(resp.getDatosTabla());
             }
-            */
+            
             ArrayList<Object> params1 = new ArrayList();
             params1.add(5);
             params1.add(5);
             resp = qry.ejecutaSelectSP(conn, "{CALL NE_FN_CONSULTAUSUARIOS(?,?)}", params1);
             System.out.println(resp.toString());
-            /*
+            
             ArrayList<Object> params = new ArrayList();
             params.add("ADMIN");
             params.add("123456");
             params.add("127.0.0.1");
             resp = qry.ejecutaSP(conn, "{ call NE_SP_INICIOSESION(?,?,?,?,?,?,?,?)}", params, paramsOut);
             System.out.println(resp.toString());
-                    */
+            
         }
         
         qry.cerrarConexion(conn);
