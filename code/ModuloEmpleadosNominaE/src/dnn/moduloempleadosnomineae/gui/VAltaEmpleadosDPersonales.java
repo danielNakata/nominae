@@ -13,6 +13,7 @@ import dnn.nominae.modulobdconexion.dto.QryRespDTO;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -302,20 +303,15 @@ public class VAltaEmpleadosDPersonales extends javax.swing.JInternalFrame {
             params.add(txtEstado.getText().toUpperCase().trim());
             params.add(this.usuarioLog.toUpperCase().trim());
             ArrayList<Integer> outs = new ArrayList();
-            /*outs.add(java.sql.Types.INTEGER);
-            outs.add(java.sql.Types.VARCHAR);
             outs.add(java.sql.Types.INTEGER);
+            outs.add(java.sql.Types.VARCHAR);
 
-            QryRespDTO resp = new Consulta().ejecutaSP(conn, Querys.spAltaEmpleado, params, outs);
+            QryRespDTO resp = new Consulta().ejecutaSP(conn, Querys.spModDomEmpleado, params, outs);
             if(resp.getRes() == 1){
-                if(Integer.parseInt(resp.getParamOut().get(0).valor.toString()) == 1){
-                    resp.getParamOut().get(2).valor.toString();
-                }else{
-                    JOptionPane.showMessageDialog(null, resp.getParamOut().get(1).valor.toString(), "Alta Empleado", JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(null, resp.getParamOut().get(1).valor.toString(), "Captura Domicilio Empleado", JOptionPane.ERROR_MESSAGE);
             }else{
-                JOptionPane.showMessageDialog(null, resp.getMsg(), "Alta Empleado", JOptionPane.ERROR_MESSAGE);
-            }*/
+                JOptionPane.showMessageDialog(null, resp.getMsg(), "Captura Domicilio Empleado", JOptionPane.INFORMATION_MESSAGE);
+            }
         }catch(Exception ex){
 
         }finally{

@@ -11,4 +11,5 @@ package dnn.moduloempleadosnomineae.db;
  */
 public interface Querys {
     public static String spAltaEmpleado = "{ call NE_SP_NUEVOEMPLEADO(?,?,?,?,?,?,?,?) }";
+    public static String spModDomEmpleado = "{ call NE_SP_MODIFICADOMICILIOEMPLEADO(?,?,?,?,?,?,?,?,?,?)}";
 }
