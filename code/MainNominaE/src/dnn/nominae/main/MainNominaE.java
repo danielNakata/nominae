@@ -5,7 +5,9 @@
  */
 package dnn.nominae.main;
 
+import dnn.nominae.conf.Config;
 import dnn.nominae.main.gui.NominaEMain;
+import java.lang.reflect.Method;
 
 /**
  *
@@ -24,7 +26,12 @@ public class MainNominaE {
          */
         try {
             try{
-                javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+                Config.cargaConfiguracion();
+                Class skin = Class.forName(Config.skinApp);
+                Method meth = skin.getMethod(Config.skinMethod, Config.getProperties().getClass());
+                meth.invoke(meth, Config.getProperties());
+                //com.jtattoo.plaf.smart.SmartLookAndFeel.setTheme(Config.getProperties());
+                javax.swing.UIManager.setLookAndFeel(Config.skinApp);
             
             }catch(Exception ex){
                 for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

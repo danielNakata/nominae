@@ -9,6 +9,7 @@ import dnn.moduloayudanominae.main.VAyuda;
 import dnn.modulolog.log.Logger;
 import dnn.nominae.conf.Config;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,6 +24,7 @@ public class NominaEMain extends javax.swing.JFrame {
      */
     public NominaEMain() {
         initComponents();
+        this.setExtendedState(MAXIMIZED_BOTH);
         if(!Config.configCargada)
             Config.cargaConfiguracion();
     }
@@ -46,7 +48,13 @@ public class NominaEMain extends javax.swing.JFrame {
         menuAyuda = new javax.swing.JMenu();
         optAyuda = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("NominaE - Menu principal");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout DeskPaneLayout = new javax.swing.GroupLayout(DeskPane);
         DeskPane.setLayout(DeskPaneLayout);
@@ -69,10 +77,20 @@ public class NominaEMain extends javax.swing.JFrame {
 
         optCerrarSesion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         optCerrarSesion.setText("Cerrar Sesion");
+        optCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optCerrarSesionActionPerformed(evt);
+            }
+        });
         menuAplicacion.add(optCerrarSesion);
 
         optSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         optSalir.setText("Salir");
+        optSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optSalirActionPerformed(evt);
+            }
+        });
         menuAplicacion.add(optSalir);
 
         cmbMenu.add(menuAplicacion);
@@ -112,16 +130,58 @@ public class NominaEMain extends javax.swing.JFrame {
 
     private void optAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optAyudaActionPerformed
         try{
-            if(vayuda == null){
-                vayuda = new VAyuda(Config.nombreApp, Config.descripcionApp, Config.versionApp, Config.desarrolladorApp, Config.lugarApp + " " + Calendar.getInstance().getTime().toString());
-                this.DeskPane.add(vayuda);
+            boolean sacoVentana = false;
+            for(int i=0; i<this.DeskPane.getComponentCount(); i++){
+                if(this.DeskPane.getComponent(i).equals(this.vayuda)){
+                    this.DeskPane.remove(i);
+                    System.out.println("Lo saco del componente");
+                    sacoVentana = true;
+                    this.DeskPane.repaint();
+                }
             }
+            if((sacoVentana)||(this.vayuda == null)){
+                vayuda = new VAyuda(Config.nombreApp, Config.descripcionApp, Config.versionApp, Config.desarrolladorApp, Config.lugarApp + " " + Calendar.getInstance().getTime().toString());
+            }
+            this.DeskPane.add(vayuda);
             this.vayuda.setVisible(true);
+            this.vayuda.setLocation(0, 0);
+            this.vayuda.setSize(this.vayuda.getPreferredSize().width, this.vayuda.getPreferredSize().height);
+            this.vayuda.setSelected(true);
             this.DeskPane.setSelectedFrame(vayuda);
         }catch(Exception ex){
             Logger.log(Config.logRuta, Config.logArch, Logger.EXCEPCION, Config.nombreApp, this.getClass().toString(), "optAyudaActionPerformed", ex.toString(), ex);
         }
     }//GEN-LAST:event_optAyudaActionPerformed
+
+    private void optSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optSalirActionPerformed
+        try{
+            if(JOptionPane.showConfirmDialog(null, "¿Desea Cerrar la Aplicacion? (Los cambios no guardados se perderan)", "NominaE - Cerrando Aplicacion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION){
+                this.dispose();
+            }
+        }catch(Exception ex){
+            Logger.log(Config.logRuta, Config.logArch, Logger.EXCEPCION, Config.nombreApp, this.getClass().toString(), "optSalirActionPerformed", ex.getMessage(), ex);
+        }
+    }//GEN-LAST:event_optSalirActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try{
+            if(JOptionPane.showConfirmDialog(null, "¿Desea Cerrar la Aplicacion? (Los cambios no guardados se perderan)", "NominaE - Cerrando Aplicacion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION){
+                this.dispose();
+            }
+        }catch(Exception ex){
+            Logger.log(Config.logRuta, Config.logArch, Logger.EXCEPCION, Config.nombreApp, this.getClass().toString(), "formWindowClosing", ex.getMessage(), ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void optCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optCerrarSesionActionPerformed
+        try{
+            if(JOptionPane.showConfirmDialog(null, "¿Desea Cerrar la Sesion? (Los cambios no guardados se perderan)", "NominaE - Cerrando Sesion", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION){
+                this.dispose();
+            }
+        }catch(Exception ex){
+            Logger.log(Config.logRuta, Config.logArch, Logger.EXCEPCION, Config.nombreApp, this.getClass().toString(), "optCerrarSesionActionPerformed", ex.getMessage(), ex);
+        }
+    }//GEN-LAST:event_optCerrarSesionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

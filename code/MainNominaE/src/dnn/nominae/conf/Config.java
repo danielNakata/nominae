@@ -25,6 +25,11 @@ public class Config {
     public static String serActualiza = "";
     public static String autor = "";
     
+    public static String skinApp = "";
+    public static String skinLbl = "";
+    public static String skinMethod = "";
+    public static String logoString = "";
+    
     public static String dbHost = "";
     public static String dbUser = "";
     public static String dbPass = "";
@@ -39,6 +44,7 @@ public class Config {
     public static String propsArch = System.getProperty("user.dir")+File.separator+"config"+File.separator+"PropApp.properties";
     public static boolean configCargada = false;
     
+    public static Properties propsMain = null;
     
     /**
      * Metodo que carga la configuracion de la aplicacion
@@ -57,6 +63,11 @@ public class Config {
             serActualiza = props.getProperty("serActualiza") != null?props.getProperty("serActualiza").toString():"";
             autor = props.getProperty("autor") != null?props.getProperty("autor").toString():"";
             
+            skinApp = props.getProperty("skinApp") != null?props.getProperty("skinApp").toString():"";
+            skinLbl = props.getProperty("skinLbl") != null?props.getProperty("skinLbl").toString():"";
+            skinMethod = props.getProperty("skinMethod") != null?props.getProperty("skinMethod").toString():"";
+            logoString = props.getProperty("logoString") != null?props.getProperty("logoString").toString():"";
+            
             dbHost = props.getProperty("dbHost") != null?props.getProperty("dbHost").toString():"";
             dbUser = props.getProperty("dbUser") != null?props.getProperty("dbUser").toString():"";
             dbPass = props.getProperty("dbPass") != null?props.getProperty("dbPass").toString():"";
@@ -68,11 +79,16 @@ public class Config {
             logRuta = props.getProperty("logRuta") != null?props.getProperty("logRuta").toString():"";
             logArch = props.getProperty("logArch") != null?props.getProperty("logArch").toString():"";
             
+            propsMain = props;
             configCargada = true;
         }catch(Exception ex){
             System.out.println("Excepcion en la carga de la configuracion debido a:\n" + ex);
             configCargada= false;
         }
         return configCargada;
+    }
+    
+    public static Properties getProperties(){
+        return propsMain;
     }
 }
